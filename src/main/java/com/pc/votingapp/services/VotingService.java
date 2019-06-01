@@ -135,7 +135,7 @@ public class VotingService {
         resource.setAgainst(against);
 
         if (userVoteEntity != null) {
-            resource.setYourVoteId(userVoteEntity.getId());
+            resource.setVoted(true);
             resource.setLocked(userVoteEntity.getLocked());
         }
 

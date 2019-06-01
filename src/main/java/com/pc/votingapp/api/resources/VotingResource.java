@@ -4,7 +4,7 @@ public class VotingResource {
 
     private Long inFavor;
     private Long against;
-    private Long yourVoteId;
+    private Boolean voted;
     private Boolean locked;
 
     public Long getInFavor() {
@@ -23,12 +23,12 @@ public class VotingResource {
         this.against = against;
     }
 
-    public Long getYourVoteId() {
-        return yourVoteId;
+    public Boolean getVoted() {
+        return voted;
     }
 
-    public void setYourVoteId(Long yourVoteId) {
-        this.yourVoteId = yourVoteId;
+    public void setVoted(Boolean voted) {
+        this.voted = voted;
     }
 
     public Boolean getLocked() {
