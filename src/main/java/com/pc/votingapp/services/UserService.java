@@ -2,6 +2,7 @@ package com.pc.votingapp.services;
 
 import com.pc.votingapp.api.resources.UserResource;
 import com.pc.votingapp.dao.repositories.UserRepository;
+import com.pc.votingapp.exceptions.UserAlreadyExistsException;
 import com.pc.votingapp.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -32,7 +33,13 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public String createUser(UserResource resource) {
-        var user = toEntity(resource);
+        var user = repository.findByLogin(resource.getLogin()).orElse(null);
+
+        if (user != null) {
+            throw new UserAlreadyExistsException();
+        }
+
+        user = toEntity(resource);
         repository.save(user);
         return user.getLogin();
     }

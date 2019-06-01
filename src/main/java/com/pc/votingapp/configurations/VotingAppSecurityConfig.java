@@ -19,7 +19,7 @@ public class VotingAppSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login.html")
                 .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/app", true)
+                .defaultSuccessUrl("/app/app.html", true)
                 .failureUrl("/login.html?error=true")
                 .and()
                 .csrf().disable()

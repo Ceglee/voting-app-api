@@ -71,6 +71,6 @@ only user service is used, deafult dao provider used, bcrypt as password encoder
 
 ### 3. database
 has to change db dump because structure has changed.
-
+SET @@global.time_zone = '+00:00';
 * ...
 
