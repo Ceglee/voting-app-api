@@ -13,7 +13,7 @@ public class VotingAppSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/api/**", "/app/**").authenticated()
+                .antMatchers("/api/**", "/app/**", "/user").authenticated()
                 .antMatchers("/**").permitAll()
                 .and()
                 .formLogin()
