@@ -3,6 +3,7 @@ package com.pc.votingapp.services;
 import com.pc.votingapp.api.resources.SubjectResource;
 import com.pc.votingapp.dao.entities.Subject;
 import com.pc.votingapp.dao.repositories.SubjectRepository;
+import com.pc.votingapp.dao.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +16,14 @@ import java.util.stream.StreamSupport;
 public class SubjectService {
 
     @Autowired
-    private SubjectRepository repository;
+    private SubjectRepository subjectRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Transactional
     public List<SubjectResource> getAllSubjects() {
-        var results = repository.findAll().spliterator();
+        var results = subjectRepository.findAll().spliterator();
         return StreamSupport
                 .stream(results, false)
                 .map(this::toResource)
@@ -27,9 +31,11 @@ public class SubjectService {
     }
 
     @Transactional
-    public Long createSubject(SubjectResource resource) {
+    public Long createSubject(SubjectResource resource, String username) {
+        var user = userRepository.findByLogin(username);
         var entity = toEntity(resource);
-        repository.save(entity);
+        entity.setOwner(user);
+        subjectRepository.save(entity);
         return entity.getId();
     }
 
@@ -44,7 +50,6 @@ public class SubjectService {
 
     private Subject toEntity(SubjectResource resource) {
         var entity = new Subject();
-        // TODO add owner id
         entity.setTitle(resource.getTitle());
         entity.setDescription(resource.getDescription());
         entity.setVotingStart(resource.getVotingStart());

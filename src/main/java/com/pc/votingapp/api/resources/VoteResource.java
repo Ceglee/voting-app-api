@@ -2,7 +2,7 @@ package com.pc.votingapp.api.resources;
 
 import javax.validation.constraints.NotNull;
 
-public class Vote {
+public class VoteResource {
 
     @NotNull
     private Long subjectId;
