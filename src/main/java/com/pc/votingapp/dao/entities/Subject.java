@@ -42,7 +42,7 @@ public class Subject {
     @Column(name = "voting_end", nullable = false)
     private Date votingEnd;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "voteSubject")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "subject")
     private Set<Vote> votes;
 
     public Long getId() {
