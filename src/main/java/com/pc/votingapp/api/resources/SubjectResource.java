@@ -5,6 +5,7 @@ import com.pc.votingapp.api.validators.VotingPeriod;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import java.util.Date;
 
 @VotingPeriod(
@@ -13,6 +14,9 @@ import java.util.Date;
         message = "Invalid votingStart or votingEnd parameters"
 )
 public class SubjectResource {
+
+    @Null
+    private Long id;
 
     @NotBlank
     private String title;
@@ -27,6 +31,14 @@ public class SubjectResource {
     @NotNull
     @FutureOrPresent
     private Date votingEnd;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;

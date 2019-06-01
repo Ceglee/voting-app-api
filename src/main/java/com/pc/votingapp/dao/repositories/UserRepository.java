@@ -3,6 +3,8 @@ package com.pc.votingapp.dao.repositories;
 import com.pc.votingapp.dao.entities.User;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.Optional;
+
 public interface UserRepository extends CrudRepository<User, Long> {
 
     /**
@@ -10,5 +12,5 @@ public interface UserRepository extends CrudRepository<User, Long> {
      * @param login
      * @return
      */
-    User findByLogin(String login);
+    Optional<User> findByLogin(String login);
 }

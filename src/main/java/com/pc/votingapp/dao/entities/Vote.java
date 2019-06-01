@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.util.Objects;
 
 @Entity
 @Table(name = "vote")
@@ -24,7 +25,7 @@ public class Vote {
 
     @ManyToOne
     @JoinColumn(name = "vote_subject_id")
-    private Subject voteSubject;
+    private Subject subject;
 
     @Column(name = "in_favor", nullable = false)
     private Boolean inFavor;
@@ -48,12 +49,12 @@ public class Vote {
         this.user = user;
     }
 
-    public Subject getVoteSubject() {
-        return voteSubject;
+    public Subject getSubject() {
+        return subject;
     }
 
-    public void setVoteSubject(Subject voteSubject) {
-        this.voteSubject = voteSubject;
+    public void setSubject(Subject subject) {
+        this.subject = subject;
     }
 
     public Boolean getInFavor() {
@@ -70,5 +71,19 @@ public class Vote {
 
     public void setLocked(Boolean locked) {
         this.locked = locked;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Vote)) return false;
+        Vote vote = (Vote) o;
+        return Objects.equals(user, vote.user) &&
+                Objects.equals(subject, vote.subject);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(user, subject);
     }
 }

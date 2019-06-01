@@ -2,6 +2,7 @@ package com.pc.votingapp.services;
 
 import com.pc.votingapp.api.resources.UserResource;
 import com.pc.votingapp.dao.repositories.UserRepository;
+import com.pc.votingapp.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,15 +26,15 @@ public class UserService implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        var user = repository.findByLogin(username);
+        var user = repository.findByLogin(username).orElseThrow(UserNotFoundException::new);
         return new User(user.getLogin(), user.getPassword(), Collections.emptyList());
     }
 
     @Transactional
     public String createUser(UserResource resource) {
-        var entity = toEntity(resource);
-        repository.save(entity);
-        return entity.getLogin();
+        var user = toEntity(resource);
+        repository.save(user);
+        return user.getLogin();
     }
 
     private com.pc.votingapp.dao.entities.User toEntity(UserResource resource) {

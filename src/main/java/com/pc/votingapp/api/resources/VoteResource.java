@@ -5,18 +5,7 @@ import javax.validation.constraints.NotNull;
 public class VoteResource {
 
     @NotNull
-    private Long subjectId;
-
-    @NotNull
     private Boolean inFavor;
-
-    public Long getSubjectId() {
-        return subjectId;
-    }
-
-    public void setSubjectId(Long subjectId) {
-        this.subjectId = subjectId;
-    }
 
     public Boolean getInFavor() {
         return inFavor;

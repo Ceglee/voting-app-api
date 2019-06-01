@@ -11,8 +11,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "vote_subject")
@@ -40,7 +43,7 @@ public class Subject {
     private Date votingEnd;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "voteSubject")
-    private List<Vote> votes;
+    private Set<Vote> votes;
 
     public Long getId() {
         return id;
@@ -90,11 +93,12 @@ public class Subject {
         this.votingEnd = votingEnd;
     }
 
-    public List<Vote> getVotes() {
+    public Set<Vote> getVotes() {
         return votes;
     }
 
-    public void setVotes(List<Vote> votes) {
+    public void setVotes(Set<Vote> votes) {
         this.votes = votes;
     }
+
 }
