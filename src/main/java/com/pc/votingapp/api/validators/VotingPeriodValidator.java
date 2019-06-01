@@ -4,8 +4,9 @@ import org.springframework.beans.PropertyAccessorFactory;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.time.Instant;
 import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
 import java.util.Date;
 
 public class VotingPeriodValidator implements ConstraintValidator<VotingPeriod, Object> {
@@ -26,15 +27,13 @@ public class VotingPeriodValidator implements ConstraintValidator<VotingPeriod, 
         var votingDateEnd = (Date) wrapper.getPropertyValue(votingEndFieldName);
 
         var isValid = true;
-        if (votingDateStart == null && votingDateEnd == null) {
-            var votingStart = LocalDate.from(votingDateStart.toInstant());
-            var votingEnd = LocalDate.from(votingDateEnd.toInstant());
-            var minStart = LocalDate.from(Instant.now()).minusDays(7);
-            var maxEnd = LocalDate.from(Instant.now()).plusMonths(1);
+        if (votingDateStart != null && votingDateEnd != null) {
+            var votingStart = LocalDate.ofInstant(votingDateStart.toInstant(), ZoneId.systemDefault());
+            var votingEnd = LocalDate.ofInstant(votingDateEnd.toInstant(), ZoneId.systemDefault());
+            var gap = Period.between(votingStart, votingEnd).getDays();
 
-            isValid = votingStart.isAfter(votingEnd);
-            isValid = isValid && votingStart.isBefore(minStart);
-            isValid = isValid && votingEnd.isAfter(maxEnd);
+            isValid = votingStart.isBefore(votingEnd);
+            isValid = isValid && gap >= 7 && gap < 31;
         }
 
         return isValid;

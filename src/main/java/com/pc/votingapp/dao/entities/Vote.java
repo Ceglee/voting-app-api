@@ -3,6 +3,7 @@ package com.pc.votingapp.dao.entities;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -13,7 +14,7 @@ import javax.persistence.Table;
 public class Vote {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
@@ -23,7 +24,7 @@ public class Vote {
 
     @ManyToOne
     @JoinColumn(name = "vote_subject_id")
-    private VoteSubject voteSubject;
+    private Subject voteSubject;
 
     @Column(name = "in_favor", nullable = false)
     private Boolean inFavor;
@@ -47,11 +48,11 @@ public class Vote {
         this.user = user;
     }
 
-    public VoteSubject getVoteSubject() {
+    public Subject getVoteSubject() {
         return voteSubject;
     }
 
-    public void setVoteSubject(VoteSubject voteSubject) {
+    public void setVoteSubject(Subject voteSubject) {
         this.voteSubject = voteSubject;
     }
 
