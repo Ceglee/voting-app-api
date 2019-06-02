@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `voting_app` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `voting_app`;
 -- MySQL dump 10.13  Distrib 8.0.16, for Win64 (x86_64)
 --
 -- Host: localhost    Database: voting_app
@@ -9,7 +7,7 @@ USE `voting_app`;
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-SET NAMES utf8 ;
+ SET NAMES utf8 ;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -23,17 +21,17 @@ SET NAMES utf8 ;
 
 DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `user` (
-                        `id` int(11) NOT NULL AUTO_INCREMENT,
-                        `first_name` varchar(45) DEFAULT NULL,
-                        `last_name` varchar(45) DEFAULT NULL,
-                        `login` varchar(45) NOT NULL,
-                        `password` varchar(45) NOT NULL,
-                        PRIMARY KEY (`id`),
-                        UNIQUE KEY `id_UNIQUE` (`id`),
-                        UNIQUE KEY `login_UNIQUE` (`login`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(45) DEFAULT NULL,
+  `last_name` varchar(45) DEFAULT NULL,
+  `login` varchar(45) NOT NULL,
+  `password` varchar(60) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  UNIQUE KEY `login_UNIQUE` (`login`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,20 +40,20 @@ CREATE TABLE `user` (
 
 DROP TABLE IF EXISTS `vote`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `vote` (
-                        `id` int(11) NOT NULL AUTO_INCREMENT,
-                        `user_id` int(11) NOT NULL,
-                        `vote_subject_id` int(11) NOT NULL,
-                        `in_favor` tinyint(4) NOT NULL DEFAULT '1',
-                        `locked` tinyint(4) NOT NULL DEFAULT '0',
-                        PRIMARY KEY (`id`),
-                        UNIQUE KEY `user_id_vote_subject_id_unique` (`user_id`,`vote_subject_id`),
-                        KEY `vote_user_fk_idx` (`user_id`),
-                        KEY `vote_vote_subject_idx` (`vote_subject_id`),
-                        CONSTRAINT `vote_user_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
-                        CONSTRAINT `vote_vote_subject` FOREIGN KEY (`vote_subject_id`) REFERENCES `vote_subject` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `vote_subject_id` int(11) NOT NULL,
+  `in_favor` tinyint(4) NOT NULL DEFAULT '1',
+  `locked` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_id_vote_subject_id_unique` (`user_id`,`vote_subject_id`),
+  KEY `vote_user_fk_idx` (`user_id`),
+  KEY `vote_vote_subject_idx` (`vote_subject_id`),
+  CONSTRAINT `vote_user_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+  CONSTRAINT `vote_vote_subject` FOREIGN KEY (`vote_subject_id`) REFERENCES `vote_subject` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -83,21 +81,25 @@ DELIMITER ;
 
 DROP TABLE IF EXISTS `vote_subject`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `vote_subject` (
-                                `id` int(11) NOT NULL AUTO_INCREMENT,
-                                `owner_id` int(11) NOT NULL,
-                                `title` varchar(45) NOT NULL,
-                                `description` varchar(1000) NOT NULL,
-                                `voting_start` date NOT NULL,
-                                `voting_end` date NOT NULL,
-                                PRIMARY KEY (`id`),
-                                UNIQUE KEY `id_UNIQUE` (`id`),
-                                UNIQUE KEY `title_UNIQUE` (`title`),
-                                KEY `vote_subject_user_fk_idx` (`owner_id`),
-                                CONSTRAINT `vote_subject_user_fk` FOREIGN KEY (`owner_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `owner_id` int(11) NOT NULL,
+  `title` varchar(200) NOT NULL,
+  `description` varchar(2000) NOT NULL,
+  `voting_start` date NOT NULL,
+  `voting_end` date NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  UNIQUE KEY `title_UNIQUE` (`title`),
+  KEY `vote_subject_user_fk_idx` (`owner_id`),
+  CONSTRAINT `vote_subject_user_fk` FOREIGN KEY (`owner_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping routines for database 'voting_app'
+--
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -108,4 +110,4 @@ CREATE TABLE `vote_subject` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-31 20:25:58
+-- Dump completed on 2019-06-02  2:16:33
