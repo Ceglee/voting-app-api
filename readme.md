@@ -2,6 +2,44 @@
 
 Backed application responsible for serving REST API based on the data stored in MySQL database. 
 ### 0. How to run it?
+
+#### 0.1 Apply database dump
+Path is *resources/script/\*.sql*
+
+#### 0.2 Build backend project
+Here are two ways depending on how we will want to run app.  
+If you want to deploy it on tomcat server then just *mvn clean install* + copying it to tomcat do the job.  
+If you want to run it as standalone executable war then:
+ - Please remove this dependency from pom
+```
+...
+    <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency> <-- this one !!!!!!!!!!!!!!
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+...
+```
+- mvn clean install
+- java -jar voting-app-api-1.0.0.war
+
+#### 0.2 Go to login page
+As asked in mail please ensure that app is deployed at root context path ("/").
+Login page will be available under:  
+*protocol://host:port/login.html*
+
 ### 1. REST API
 
 #### 1.1 Resources
@@ -38,7 +76,7 @@ Request:
 
 Response:  
 Header with proper location for example  
-*Location: http://localhost:8080/api/{subjectId}*
+*Location: http://localhost:8080/api/subject/{subjectId}*
 
 ##### 1.1.3 **GET /api/subject/{subjectId}/voting**
 Gets detail information about subjects
