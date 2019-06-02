@@ -36,7 +36,7 @@ public class VotingController {
                                                 UriComponentsBuilder builder) {
         Long subjectId = service.createSubject(subjectResource, principal.getName());
         return ResponseEntity.created(
-                builder.path("/api/subjects")
+                builder.path("/api/subject/")
                         .path(String.valueOf(subjectId))
                         .build()
                         .toUri()
@@ -56,9 +56,9 @@ public class VotingController {
                                              UriComponentsBuilder builder) {
         Long voteId = service.voteForSubject(subjectResource, principal.getName(), subjectId);
         return ResponseEntity.created(
-                builder.path("/api/subjects")
+                builder.path("/api/subject/")
                         .path(String.valueOf(subjectId))
-                        .path("vote")
+                        .path("/vote/")
                         .path(String.valueOf(voteId))
                         .build()
                         .toUri()

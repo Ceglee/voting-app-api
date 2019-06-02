@@ -62,9 +62,9 @@ public class UserControllerTest {
         var response = mvc.perform(post("/user")
                 .content(VALID_REQUEST)
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().is2xxSuccessful()).andReturn().getResponse();
+                .andExpect(status().isCreated()).andReturn().getResponse();
         var location = response.getHeader("Location");
         assertNotNull(location);
-        assertEquals("http://localhost/api/user1", location);
+        assertEquals("http://localhost/api/user/1", location);
     }
 }

@@ -22,7 +22,7 @@ public class UserController {
                                                 UriComponentsBuilder builder) {
         Long userId = service.createUser(userResource);
         return ResponseEntity.created(
-                builder.path("/api/user")
+                builder.path("/api/user/")
                         .path(String.valueOf(userId))
                         .build()
                         .toUri()
