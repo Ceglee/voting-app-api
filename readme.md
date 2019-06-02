@@ -200,6 +200,7 @@ spring.datasource.password=app_user
 |last_name|varchar(45)|NN||
 |login|varchar(45)|NN, UQ||
 |password|varchar(60)|NN|Stored as encoded value|
+
 Default indexes has been set on primary key and unique values. No triggers.
 
 ### 3.2 Vote subject table
@@ -211,16 +212,18 @@ Default indexes has been set on primary key and unique values. No triggers.
 |description|varchar(2000)|NN||
 |voting_start|date|NN|
 |voting_end|date|NN|
+
 Default indexes has been set on primary key, foreign key and unique values. No triggers.
 
 ### 3.2 Vote table
 |column name|value type|constraints|remarks|
 |-----------|----------|-----------|-------|
 |id|int|PK, NN, UQ|Why compound key not used instead? To have possibility to locate resource using just one value. In future we might want to reach it directly, not through subject or user.|
-|user_id|int|FK, NN, UQ(user_id, vote_subject_id)|Index set on this unique constraint is *EXTREMELY IMPORTANT!* because we are using it in one, heavy query.|
+|user_id|int|FK, NN, UQ(user_id, vote_subject_id)|Index set on this unique constraint is **EXTREMELY IMPORTANT!** because we are using it in one, heavy query.|
 |vote_subject_id|int|FK, NN, UQ(user_id, vote_subject_id)|Same as above.|
 |in_favor|boolean|NN, trigger check|Used trigger to check if we can update this filed. If locked == true then not.|
 |locked|boolean|NN||
+
 Table which stores m:n relation, little bit more complicated than previous ones. Trigger was created to support "only one vote update available" feature. 
 
-Last remark: pk from database shouldn't be used as ids to locate REST resources. It was just created like this to save some time.
+**Last remark:** primary keys from database usually shouldn't be used as ids to locate REST resources. It was just created like this to save some time.
