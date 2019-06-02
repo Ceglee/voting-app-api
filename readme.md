@@ -176,12 +176,51 @@ Access to login page, create user page and all other possible paths is granted f
 At this moment there is no log out functionality so the best way to drop session is just to remove cookie. It was not handled
 because of lack of time.
 
-### 3. database
-gdzie dump
-jak ustawic polaczenie
-has to change db dump because structure has changed.
-SET @@global.time_zone = '+00:00';
-INDEX NA USER_ID SOUBJECTID w votes bo po tym wyszukujemy!
-* ...
+### 3. Database
+Three database tables has been created. **user**, **vote** and **vote_subject**. Firs one is responsible for storing
+application users, **vote_subject** contains data for each subject. **vote** is a helper table for mapping many to many relation
+between previous two tables. Also it contains information about the vote state.
 
-passing ids from database
+Database dump can be found in *resources/scripts* folder.
+
+Default Spring Boot connection has been created setting only right values in applications.properties (this is the fastest solution).  
+Default values are:
+```properties
+spring.jpa.hibernate.ddl-auto=none
+spring.datasource.url=jdbc:mysql://localhost:3306/voting_app?serverTimezone=UTC
+spring.datasource.username=app_user
+spring.datasource.password=app_user
+```
+
+#### 3.1 User table
+|column name|value type|constraints|remarks|
+|-----------|----------|-----------|-------|
+|id|int|PK, NN, UQ||
+|first_name|varchar(45)|NN||
+|last_name|varchar(45)|NN||
+|login|varchar(45)|NN, UQ||
+|password|varchar(60)|NN|Stored as encoded value|
+Default indexes has been set on primary key and unique values. No triggers.
+
+### 3.2 Vote subject table
+|column name|value type|constraints|remarks|
+|-----------|----------|-----------|-------|
+|id|int|PK, NN, UQ||
+|owner_id|int|FK(user), NN| This field doesn't store vote relations! It is just find user who created given subject (nice to have)|
+|title|varchar(200)|NN, UQ||
+|description|varchar(2000)|NN||
+|voting_start|date|NN|
+|voting_end|date|NN|
+Default indexes has been set on primary key, foreign key and unique values. No triggers.
+
+### 3.2 Vote table
+|column name|value type|constraints|remarks|
+|-----------|----------|-----------|-------|
+|id|int|PK, NN, UQ|Why compound key not used instead? To have possibility to locate resource using just one value. In future we might want to reach it directly, not through subject or user.|
+|user_id|int|FK, NN, UQ(user_id, vote_subject_id)|Index set on this unique constraint is *EXTREMELY IMPORTANT!* because we are using it in one, heavy query.|
+|vote_subject_id|int|FK, NN, UQ(user_id, vote_subject_id)|Same as above.|
+|in_favor|boolean|NN, trigger check|Used trigger to check if we can update this filed. If locked == true then not.|
+|locked|boolean|NN||
+Table which stores m:n relation, little bit more complicated than previous ones. Trigger was created to support "only one vote update available" feature. 
+
+Last remark: pk from database shouldn't be used as ids to locate REST resources. It was just created like this to save some time.
