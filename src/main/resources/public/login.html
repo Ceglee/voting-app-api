@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>VotingAppWeb</title>
+    <base href="/">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.f720ea16f52210f30a88.css">
+</head>
+<body>
+<article class="container-fluid">
+    <section class="row justify-content-center">
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card my-3">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Welcome to voting application</h5>
+                    <form name='f' action="/login" method='POST'>
+                        <div class="input-group my-3">
+                            <input type="text" name="username" class="form-control" placeholder="Username" aria-label="Username">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="password" name="password" class="form-control" placeholder="Password" aria-label="Password">
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button name="submit" type="submit" value="submit"  class="btn btn-primary">Log in</button>
+                        </div>
+                    </form>
+                    <div class="border-bottom my-3"></div>
+                    <p class="card-text">Don't have account yet? You can create it <a href="/createAccount.html">here</a></p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</article>
+<app-root></app-root>
+</body>
+</html>

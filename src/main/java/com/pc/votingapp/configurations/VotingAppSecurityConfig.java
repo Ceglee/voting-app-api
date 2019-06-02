@@ -13,13 +13,13 @@ public class VotingAppSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/api/**", "/app/**").authenticated()
+                .antMatchers("/api/**", "/app*").authenticated()
                 .antMatchers("/**").permitAll()
                 .and()
                 .formLogin()
                 .loginPage("/login.html")
                 .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/app/app.html", true)
+                .defaultSuccessUrl("/app.html", true)
                 .failureUrl("/login.html?error=true")
                 .and()
                 .csrf().disable()
