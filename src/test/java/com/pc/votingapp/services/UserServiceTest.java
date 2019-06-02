@@ -74,6 +74,7 @@ public class UserServiceTest {
     @Test
     public void createUserUserDoesNotAlreadyExists() {
         var userId = 123L;
+        var encodedPass = "!@#$";
         var userResource = new UserResource();
         userResource.setLogin(USER_NAME);
         userResource.setPassword(PASSWORD);
@@ -85,12 +86,13 @@ public class UserServiceTest {
 
         doAnswer(invocation -> {
             User user = invocation.getArgument(0);
+            assertEquals(encodedPass, user.getPassword());
             user.setId(userId);
             return null;
         }).when(repository).save(any());
 
         when(repository.findByLogin(USER_NAME)).thenReturn(Optional.empty());
-        when(encoder.encode(anyString())).thenReturn("123");
+        when(encoder.encode(anyString())).thenReturn(encodedPass);
 
         service.createUser(userResource);
 
