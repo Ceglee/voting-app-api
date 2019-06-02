@@ -96,6 +96,6 @@ public class UserServiceTest {
 
         service.createUser(userResource);
 
-        assertEquals(123L, service.createUser(userResource), 0);
+        assertEquals(123L, service.createUser(userResource).longValue());
     }
 }
