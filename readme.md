@@ -4,8 +4,9 @@ Backed application responsible for serving REST API based on the data stored in 
 ### 0. How to run it?
 ### 1. REST API
 
-####1.1 Resources
-**GET /api/subject** gets all voting subjects.
+#### 1.1 Resources
+##### 1.1.1 **GET /api/subject**
+Gets all voting subjects.
 
 Response:
 ```
@@ -22,7 +23,8 @@ Response:
 ]
 ```
 
-**POST /api/subject** creates new subject
+##### 1.1.2 **POST /api/subject** 
+Creates new subject.
 
 Request: 
 ```
@@ -38,7 +40,8 @@ Response:
 Header with proper location for example  
 *Location: http://localhost:8080/api/{subjectId}*
 
-**GET /api/subject/{subjectId}/voting** - gets detail information about subjects
+##### 1.1.3 **GET /api/subject/{subjectId}/voting**
+Gets detail information about subjects
 
 Response:
 ```
@@ -49,7 +52,8 @@ Response:
   "locked": boolean
 }
 ```
-**POST /api/subject/{subjectId}/vote** - votes for given subjects
+##### 1.1.4 **POST /api/subject/{subjectId}/vote** 
+Votes for given subjects
 
 Request
 ```
@@ -62,10 +66,11 @@ Response:
 Header with proper location for example  
 *Location: http://localhost:8080/api/subject/{subjectId}/vote/{voteId}*
 
-PUT /api/subject/{subjectId}/vote - changes your vote 
+##### 1.1.5 **PUT /api/subject/{subjectId}/vote**
+Changes your vote 
 
 Vote id is not set in url because there might be only one vote per subject for given user,
-so we are able to retrieve it from there
+so we are able to retrieve it from there.
 
 Request:
 ```
@@ -81,7 +86,8 @@ Response:
 }
 ```
 
-POST /user - creates new user
+##### 1.1.6 **POST /user**
+Creates new user
 
 Request:
 ```
