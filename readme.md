@@ -7,9 +7,9 @@ Backed application responsible for serving REST API based on the data stored in 
 Path is *resources/script/\*.sql*
 
 #### 0.2 Build backend project
-Here are two ways depending on how we will want to run app.  
-If you want to deploy it on tomcat server then just *mvn clean install* + copying it to tomcat do the job.  
-If you want to run it as standalone executable war then:
+There are two ways, depending on how we will want to run app.  
+If you want to deploy it on tomcat server, then just *mvn clean install* + copying it to tomcat do the job.  
+If you want to run it as standalone executable war, then:
  - Please remove this dependency from pom
 ```
 ...
@@ -36,7 +36,7 @@ If you want to run it as standalone executable war then:
 - java -jar voting-app-api-1.0.0.war
 
 #### 0.2 Go to login page
-As asked in mail please ensure that app is deployed at root context path ("/").
+As asked in the mail, please ensure that app is deployed at root context path ("/").
 Login page will be available under:  
 *protocol://host:port/login.html*
 
