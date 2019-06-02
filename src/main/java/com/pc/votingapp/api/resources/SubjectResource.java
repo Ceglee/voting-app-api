@@ -25,11 +25,9 @@ public class SubjectResource {
     private String description;
 
     @NotNull
-    @FutureOrPresent
     private Date votingStart;
 
     @NotNull
-    @FutureOrPresent
     private Date votingEnd;
 
     public Long getId() {
