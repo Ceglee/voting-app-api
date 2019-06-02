@@ -18,12 +18,12 @@ public class UserController {
     private UserService service;
 
     @PostMapping("/user")
-    public ResponseEntity<Object> createSubject(@RequestBody @Valid UserResource userResource,
+    public ResponseEntity<Object> createUser(@RequestBody @Valid UserResource userResource,
                                                 UriComponentsBuilder builder) {
-        String userLogin = service.createUser(userResource);
+        Long userId = service.createUser(userResource);
         return ResponseEntity.created(
-                builder.path("/api/subjects")
-                        .path(String.valueOf(userLogin))
+                builder.path("/api/user")
+                        .path(String.valueOf(userId))
                         .build()
                         .toUri()
         ).build();

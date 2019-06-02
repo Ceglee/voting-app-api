@@ -32,7 +32,7 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public String createUser(UserResource resource) {
+    public Long createUser(UserResource resource) {
         var user = repository.findByLogin(resource.getLogin()).orElse(null);
 
         if (user != null) {
@@ -41,7 +41,7 @@ public class UserService implements UserDetailsService {
 
         user = toEntity(resource);
         repository.save(user);
-        return user.getLogin();
+        return user.getId();
     }
 
     private com.pc.votingapp.dao.entities.User toEntity(UserResource resource) {
