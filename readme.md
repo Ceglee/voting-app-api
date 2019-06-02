@@ -179,7 +179,7 @@ public class SubjectResource {
 All pages, scripts and css are served as static resources from *resources/public* folder. All these files were built
 in frontend project and just copy pasted into this one.
 
-Available path are:
+Available paths are:
 - /login.html - login page
 - /createAccount.html - create account page
 - /app.html - voting application page
@@ -221,7 +221,7 @@ between previous two tables. Also it contains information about the vote state.
 
 Database dump can be found in *resources/scripts* folder.
 
-Default Spring Boot connection has been created setting only right values in applications.properties (this is the fastest solution).  
+Default Spring Boot connection has been created by setting right values in applications.properties (this is the fastest solution).  
 Default values are:
 ```properties
 spring.jpa.hibernate.ddl-auto=none
